@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cz.srnet.shttpdj" default="dist">
+  <property name="project.version" value="0.1.1"/>
+  <path id="path.libs">
+    <fileset dir="lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+  <path id="path.full">
+    <path refid="path.libs"/>
+    <pathelement location="classes"/>
+  </path>
+  <target name="compile">
+    <mkdir dir="classes"/>
+    <javac srcdir="src" destdir="classes" classpathref="path.libs"/>
+  </target>
+  <target name="javadoc" depends="compile">
+    <javadoc destdir="doc/api" access="protected" use="true"
+             notree="false" nonavbar="false" noindex="false"
+             splitindex="true" author="true" version="true"
+             nodeprecatedlist="false" nodeprecated="false"
+             packagenames="cz.srnet.shttpdj.*"
+             sourcepath="src" classpathref="path.full"
+	     windowtitle="shttpdj">
+             <doctitle><![CDATA[<h1>shttpdj</h1>]]></doctitle>
+             <bottom><![CDATA[<i>Copyright &#169; 2003 Stepan Roh</i>]]></bottom>
+             <link href="http://java.sun.com/j2se/1.3/docs/api"/>
+             <link href="http://xml.apache.org/xerces2-j/javadocs/api/"/>
+             <link href="http://jakarta.apache.org/log4j/docs/api/"/>
+    </javadoc>
+  </target>
+  <target name="build" depends="compile">
+    <jar jarfile="shttpdj.jar" basedir="classes"/>
+  </target>
+  <target name="dist" depends="build,javadoc">
+    <zip zipfile="shttpdj_${project.version}_bin.zip" basedir=".">
+      <include name="README"/>
+      <include name="README.cs"/>
+      <include name="doc"/>
+      <include name="doc/**"/>
+      <include name="test"/>
+      <include name="test/**"/>
+      <include name="shttpdj.jar"/>
+      <exclude name="doc/api"/>
+      <exclude name="doc/api/**"/>
+    </zip>
+    <zip zipfile="shttpdj_${project.version}_src.zip" basedir=".">
+      <include name="README"/>
+      <include name="README.cs"/>
+      <include name=".classpath"/>
+      <include name=".project"/>
+      <include name="build.xml"/>
+      <include name="src/**"/>
+      <include name="doc"/>
+      <include name="doc/api"/>
+      <include name="doc/api/**"/>
+    </zip>
+    <zip zipfile="shttpdj_${project.version}_lib.zip" basedir=".">
+      <include name="README"/>
+      <include name="README.cs"/>
+      <include name="lib/**"/>
+    </zip>
+  </target>
+  <target name="clean">
+    <delete dir="classes"/>
+    <delete file="shttpdj.jar"/>
+    <delete>
+      <fileset dir="." includes="shttpdj*.zip"/>
+    </delete>
+  </target>
+</project>
