@@ -1,5 +1,7 @@
 # shttpdj
 
+**Warning: unmaintained since 2003!**
+
 Motto: 's' as stupid.
 
 ## Running
